@@ -81,8 +81,10 @@ window.onload = function() {
     validatorUrl: {!! isset($validatorUrl) ? '"' . $validatorUrl . '"' : 'null' !!},
     oauth2RedirectUrl: "{{ route('l5-swagger.oauth2_callback') }}",
 
-    requestInterceptor: function() {
+    requestInterceptor: function(request) {
       this.headers['X-CSRF-TOKEN'] = '{{ csrf_token() }}';
+      this.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization';
+      console.log('[Swagger] intercept try-it-out request', request);
       return this;
     },
 
@@ -96,6 +98,15 @@ window.onload = function() {
     ],
 
     layout: "StandaloneLayout"
+  })
+
+  ui.initOAuth({
+    clientId: "{{config('l5-swagger.client_id')}}",
+    clientSecret: "{{config('l5-swagger.client_secret')}}",
+    realm: "your-realms",
+    appName: "{{config('l5-swagger.app_name')}}",
+    scopeSeparator: " ",
+    additionalQueryStringParams: {test: "hello"}
   })
 
   window.ui = ui

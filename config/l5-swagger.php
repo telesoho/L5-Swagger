@@ -224,4 +224,11 @@ return [
     'constants' => [
         'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'http://my-default-host.com'),
     ],
+
+    /**
+     * 定义client_id
+     */
+    'app_name'   => env('L5_SWAGGER_SECURITY_APP_NAME', ""),
+    'client_id' => env('L5_SWAGGER_SECURITY_CLIENT_ID', ""),
+    'client_secret' => env('L5_SWAGGER_SECURITY_CLIENT_SECRET', ""),
 ];
