@@ -1,5 +1,5 @@
 {
-  "name": "darkaonline/l5-swagger",
+  "name": "telesoho/l5-swagger",
   "description": "Swagger integration to Laravel 5",
   "keywords": [
     "laravel",
@@ -11,7 +11,11 @@
     {
       "name": "Darius Matulionis",
       "email": "darius@matulionis.lt"
-    }
+    },
+    {
+      "name": "telesoho",
+      "email": "telesoho@gmail.com"
+    }    
   ],
   "require": {
     "php": ">=7.1.3",
