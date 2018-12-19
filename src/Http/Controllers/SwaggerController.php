@@ -17,10 +17,11 @@ class SwaggerController extends BaseController
      *
      * @return \Response
      */
-    public function docs($jsonFile = null)
+    public function docs($groupName, $jsonFile = null)
     {
-        $filePath = config('l5-swagger.paths.docs').'/'.
-            (! is_null($jsonFile) ? $jsonFile : config('l5-swagger.paths.docs_json', 'api-docs.json'));
+        $pathDocs = config("l5-swagger.paths.docs").'/'.$groupName;
+        $jsonFile = !is_null($jsonFile) ? $jsonFile: config("l5-swagger.paths.docs_json", 'api-docs.json');
+        $filePath = $pathDocs.'/'.$jsonFile;
 
         if (! File::exists($filePath)) {
             abort(404, 'Cannot find '.$filePath);
@@ -38,10 +39,10 @@ class SwaggerController extends BaseController
      *
      * @return \Response
      */
-    public function api()
+    public function api($groupName)
     {
         if (config('l5-swagger.generate_always')) {
-            Generator::generateDocs();
+            Generator::generateDocs($groupName);
         }
 
         if ($proxy = config('l5-swagger.proxy')) {
@@ -52,13 +53,15 @@ class SwaggerController extends BaseController
         }
 
         // Need the / at the end to avoid CORS errors on Homestead systems.
+        $urlToDocs = route("l5-swagger.docs", $groupName, config("l5-swagger.paths.docs_json", 'api-docs.json'));
         $response = Response::make(
             view('l5-swagger::index', [
                 'secure' => Request::secure(),
-                'urlToDocs' => route('l5-swagger.docs', config('l5-swagger.paths.docs_json', 'api-docs.json')),
+                'urlToDocs' => $urlToDocs,
                 'operationsSorter' => config('l5-swagger.operations_sort'),
                 'configUrl' => config('l5-swagger.additional_config_url'),
                 'validatorUrl' => config('l5-swagger.validator_url'),
+                'groupName' => $groupName,
             ]),
             200
         );
@@ -71,7 +74,7 @@ class SwaggerController extends BaseController
      *
      * @return string
      */
-    public function oauth2Callback()
+    public function oauth2Callback($groupName)
     {
         return \File::get(swagger_ui_dist_path('oauth2-redirect.html'));
     }
