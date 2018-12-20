@@ -101,10 +101,10 @@ window.onload = function() {
   })
 
   ui.initOAuth({
-    clientId: `{{config("l5-swagger.doc_group.{$groupName}.client_id", config('l5-swagger.client_id'))}}`,
-    clientSecret: `{{config("l5-swagger.doc_group.{$groupName}.client_id",config('l5-swagger.client_secret'))}}`,
+    clientId: `{{config("l5-swagger.doc_group.{$groupName}.oauth.client_id", config('l5-swagger.client_id'))}}`,
+    clientSecret: `{{config("l5-swagger.doc_group.{$groupName}.oauth.client_secret",config('l5-swagger.client_secret'))}}`,
     realm: "your-realms",
-    appName: `{{config("l5-swagger.doc_group.{$groupName}.app_name", config('l5-swagger.app_name'))}}`,
+    appName: `{{config("l5-swagger.doc_group.{$groupName}.oauth.app_name", config('l5-swagger.app_name'))}}`,
     scopeSeparator: " ",
     additionalQueryStringParams: {}
   })
