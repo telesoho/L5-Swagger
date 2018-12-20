@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>{{config('l5-swagger.api.title')}}</title>
+  <title>{{config("l5-swagger.doc_group.{$groupName}.api.title", config('l5-swagger.api.title'))}}</title>
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Source+Code+Pro:300,600|Titillium+Web:400,600,700" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{{ l5_swagger_asset('swagger-ui.css') }}" >
   <link rel="icon" type="image/png" href="{{ l5_swagger_asset('favicon-32x32.png') }}" sizes="32x32" />
@@ -101,12 +101,12 @@ window.onload = function() {
   })
 
   ui.initOAuth({
-    clientId: "{{config('l5-swagger.client_id')}}",
-    clientSecret: "{{config('l5-swagger.client_secret')}}",
+    clientId: `{{config("l5-swagger.doc_group.{$groupName}.client_id", config('l5-swagger.client_id'))}}`,
+    clientSecret: `{{config("l5-swagger.doc_group.{$groupName}.client_id",config('l5-swagger.client_secret'))}}`,
     realm: "your-realms",
-    appName: "{{config('l5-swagger.app_name')}}",
+    appName: `{{config("l5-swagger.doc_group.{$groupName}.app_name", config('l5-swagger.app_name'))}}`,
     scopeSeparator: " ",
-    additionalQueryStringParams: {test: "hello"}
+    additionalQueryStringParams: {}
   })
 
   window.ui = ui
