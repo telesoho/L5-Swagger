@@ -41,6 +41,14 @@ class SwaggerController extends BaseController
      */
     public function api($groupName)
     {
+        // If group name donot exist in config, go error.
+        if(config('l5-swagger.doc_group')) {
+            $all_group = config('l5-swagger.doc_group');
+            if(!array_key_exists($groupName, $all_group)) {
+                abort(404, 'Cannot find group:'.$groupName);
+            };
+        }
+
         if (config('l5-swagger.generate_always')) {
             Generator::generateDocs($groupName);
         }
